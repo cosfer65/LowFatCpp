@@ -20,7 +20,7 @@ public:
     solid_object(double m = 0) : mass(m) {}
     virtual ~solid_object() {}
     // pure virtual function
-    virtual double volume() = 0;
+    virtual double volume() const = 0;
 };
 
 // the cube is a special solid object
@@ -29,7 +29,7 @@ public:
     double edge_length;
     cube(double m, double el) :solid_object(m), edge_length(el) {}
     virtual ~cube() {}
-    virtual double volume() { return edge_length * edge_length * edge_length; }
+    virtual double volume() const { return edge_length * edge_length * edge_length; }
 };
 
 // so is a sphere
@@ -39,7 +39,7 @@ public:
     double radius;
     sphere(double m, double r) :solid_object(m), radius(r) {}
     virtual ~sphere() {}
-    virtual double volume() { return 4 * pi * radius * radius * radius / 3; }
+    virtual double volume() const { return 4 * pi * radius * radius * radius / 3; }
 };
 
 // access control

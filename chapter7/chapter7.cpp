@@ -58,6 +58,9 @@ public:
     double& x() {
         return coordinates[0];
     }
+    const double& x() const {
+        return coordinates[0];
+    }
     double& y() {
         return coordinates[1];
     }

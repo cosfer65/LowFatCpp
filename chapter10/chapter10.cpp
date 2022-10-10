@@ -31,7 +31,7 @@ void pairs_and_tuples()
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-class worker {
+class worker {     // scary revisit
 public:
     int i;
     std::weak_ptr<worker> leader;

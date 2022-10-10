@@ -41,7 +41,7 @@ void cpp_structures()
     dtype v1, v2;
 
     // allocating the pointer results in a valid pointer
-    v1.ar = new int[10];
+    v1.ar = new int[10];      //remember to DELETE
 
     // copying here, copies to ‘br’ invalid uninitialized data
     // but ‘ar’ pointer is valid and copied to the second

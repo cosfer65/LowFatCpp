@@ -1,0 +1,7 @@
+
+*.db
+*.db-shm
+*.db-wal
+*.opendb
+*.ipch
+.vs/lowfatcpp/v16/.suo

@@ -4,14 +4,15 @@ void branching()
 {
     int a;      // create an integer variable a
     int b;      // create an integer variable b
-    int c;      // create an integer variable c
+    // not here int c;      // create an integer variable c
 
     std::cout << "insert a:";   // give the user a hint
     std::cin >> a;              // read the value of a from the keyboard
     std::cout << "insert b:";   // another hint for the user
     std::cin >> b;              // now read the value of b
 
-    c = a + b;                  // calculate the value of c
+    // could be const
+    int c = a + b;                  // calculate the value of c
 
     if (c > 20)      // if c is bigger than 20
     {
@@ -26,6 +27,8 @@ void branching()
         std::cout << "c is less than 20 : " << c << "\n";  // print this message
     }
 
+
+    // too bad  switch with true and false
     bool d;         // create a boolean variable
     d = c > 20;     // this will hold weather the condition is true or false
     switch (d)      // depending on the condition do the following
@@ -74,10 +77,7 @@ void loops()
             break;
         if (i > 9)
             continue;
-        if (i > 5)
-            goto bypass;
         i = i * 2;
-    bypass:
         std::cout << "i=" << i << "\n";
     }
 

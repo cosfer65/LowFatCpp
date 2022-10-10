@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-// eliminate douplicate integers in a sorted array of length len
+// eliminate duplicate integers in a sorted array of length len
 int array_compactor(int* arr, int len)
 {
     // we read and write ath the same array
@@ -109,6 +109,7 @@ void allocate_one_dimensional(int num_points)
     delete[] coords;
 }
 
+// and now an inefficient way to do it
 void allocate_two_dimensional(int num_points)
 {
     // first allocate a pointer for each point
