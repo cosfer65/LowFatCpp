@@ -3,223 +3,241 @@
 
 #include <iostream>
 
-// overlaoded functions
-void fancy_printer(int i)
+// eliminate duplicate integers in a sorted array of length len
+int array_compactor(int* arr, int len)
 {
-    std::cout << "integer:" << i << "\n";
-}
-void fancy_printer(double d)
-{
-    std::cout << "double:" << d << "\n";
-}
-void fancy_printer(char* c)
-{
-    std::cout << "character:" << c << "\n";
-}
-void fancy_printer(int i, char* c)
-{
-    std::cout << "integer:" << i << ", text:" << c << "\n";
-}
+    // we read and write ath the same array
+    // the rading pointer advances at every iteration
+    // while the writing stays while we encounter douplicates
 
-// default arguments
-int multiply(int i, int times = 1)
-{
-    return i * times;
-}
-
-// the arguments are local variables initialized automatically
-// with the values we pass in the function call
-// notice the pointer! it holds an address not a value
-void local_variables(int i, double* d)
-{
-    //int j;
-
-    for (int k = 0; k < 10; ++k)
+    // we need a pointer to the writing position
+    // initialy set at the start of the array
+    int* wr = arr;
+    // advance the reading pointer
+    ++arr;
+    // the length of the 'clear' array is at least 1
+    int l = 1;
+    // the reading pointer is at the first position
+    // at advance the reading position and the reading counter
+    // until we reach the array length
+    for (auto i = 1; i < len; ++i, ++arr)
     {
-        std::cout << k << "\n";
+        // if the current element is not the same as the previous
+        // wr points to the previous and arr to the current
+        if (*wr != *arr)
+        {
+            // advance the writing pointer one position
+            ++wr;
+            // and the length of the 'clean' array
+            ++l;
+        }
+        // copy the content of the reading position
+        // to the writing positin
+        *wr = *arr;
     }
+    // return the number of unique elements
+    return l;
+}
 
-    //++k;   // error k is out of scope
+// chack if the string is palindrome
+bool is_palindrome(char* arr)
+{
+    // setup initial conditions
+    // a pointer to the first character
+    char* start = arr;
+    // and anoter one to the last
+    char* term = arr; // start at the beginning
+    while (*term != '\0')  // go to the terminating '\0'
+        ++term;
+    --term;  // and back up to the last charachter
 
-    // perdectly valid statement, only the value is NOT returned
-    // the variable has this value until the end of the function
-    i = 100;
-
-    if (i > 10)
+    // the term pointer points to higher address
+    while (term > start)   // and while this is true
     {
-        double l = 100 * (*d);
+        // if the characters at the opposite sides
+        // are not the same, return false
+        if (*term != *start)
+            return false;
+        // otherwise advance the start pointer
+        // and back up the term pointer
+        // this way we examine symmtrical positions
+        // and the pointers will cross at the middle of the string
+        // when they cross the loop will break
+        ++start;
+        --term;
     }
-
-    //std::cout << l << "\n";  // error l is out of scope
+    // reaching this point means no error was found
+    // it is safe to return true
+    return true;
 }
 
-// a global variable
-int some_global_int = 0;
-
-// count how many time we run
-int run_counter()
+// this function takes the addresses of the variables
+// we can modify the contents of the addresses aka 
+// the variable in the calling function
+void read_position(double* x, double* y, double* z)
 {
-    // start with initialization
-    static int count = 0;
-    // count
-    ++count;
-    // and return current status
-    return count;
+    *x = 1;
+    *y = 2;
+    *z = 3;
 }
 
-// this function will run only once
-void function_runs_once()
+// C++ introduced the concept of reference
+// these are ordinary looking variables that actualy refer to other variables
+// this wa we can modify the original ones without the odd syntax above
+// he compiler takes care of everything
+// here we also use the feature of function overloading
+// this function and the one above have the same name
+// but they have different types of arguments
+// this allows the compiler to select the correct one when we call them.
+void read_position(double& x, double& y, double& z)
 {
-    // initialize a static variable to 0
-    static int i = 0;
-    // if the value of it is 1 return
-    // and ignore the rest of the code
-    if (i == 1)
-        return;
-    // set the value to 1
-    i = 1;
-    // the code from this point on runs only once
+    x = 10;
+    y = 20;
+    z = 30;
 }
 
-// indirect recursion
-// one function is calling the other
-void recur_i();
-void secondary()
+// this is a call by value
+// we only need a read only access so we just create 
+// temporary copies of the values of the variables
+void show_position(double x, double y, double z)
 {
-    recur_i();
-}
-void recur_i()
-{
-    secondary();
+    std::cout << "x:" << x << " y:" << y << " z:" << z << "\n";
 }
 
-// direct recursion
-// function calling itself
-void recur(int i)
+void do_stuff_with_points(double* points, int num_points)
 {
-    // make sure that recursion will terminate
-    if (i<100)
-        recur(i+1);
-}
-
-// recursive implementation of the factorial
-int recursive_factorial(int n)
-{
-    // according to the mathematical definition
-    if (n <= 1)
-        return 1;
-    // proceed recursively
-    return n * recursive_factorial(n - 1);
-}
-
-int factorial(int n)
-{
-    int f = 1;
-    for (auto i = 1; i <= n; ++i)
-        f *= i;
-    return f;
-}
-
-// a static array somewhere in our code
-static int myvalues[10];
-// the only way to set the values in the array
-// is by using this fumction
-int& getValue(int index)
-{
-    // if the index is within the array
-    // return the appropriate eleent
-    if (index >= 0 && index < 10)
-        return myvalues[index];
-    // othewise return a dummy variable
-    // the variable must be static
-    static int dummy = 0;
-    return dummy;
-}
-
-// pointers to functions
-// function that takes a function pointer as an argument
-void run_iteration(void (*iteration_callback)(int))
-{
-    // do some task
-    // and call a user defined function 
-    // when needed
-    for (auto i = 0; i < 10; ++i)
-        iteration_callback(i);
-}
-// user defined callback function that prints even numbers
-void my_callback_evens(int v)
-{
-    // print even numbers
-    if ((v % 2) == 0)
-        std::cout << v << "\n";
-}
-// user defined callback function that prints odd numbers
-void my_callback_odds(int v)
-{
-    // print even numbers
-    if ((v % 2) == 1)
-        std::cout << v << "\n";
-}
-
-// using pointers to functions
-// game_core.h
-// this is the header containing core declarations about the game
-
-// first we define the function type
-typedef void (*draw_function)();
-// and we declare the interface function
-void set_draw_function(draw_function function_pointer);
-
-//---------------------------------------------------------
-
-// game_core.cpp
-// include game definitions
-//#include "game_core.h"
-
-// this is the default draw function
-static void draw_idle()
-{
-}
-// we create a pointer and initialize it to the default function
-static draw_function draw = draw_idle;
-
-// the interface function
-// we call this when we need to change the drawing function
-void set_draw_function(draw_function function_pointer)
-{
-    draw = function_pointer;
-}
-
-void main_program_loop()
-{
-    bool we_are_happy_with_the_game = true;
-    while (we_are_happy_with_the_game) {
-        // do our gaming stuff
-        // and finally call draw to update the scene
-        draw();
+    for (auto i = 0; i < num_points; ++i)
+    {
+        // remember each point takes up three places
+        double x = points[i * 3];     // x is first
+        double y = points[i * 3 + 1]; // y is second
+        double z = points[i * 3 + 2]; // z is third
     }
 }
 
+void do_stuff_with_points(double** points, int num_points)
+{
+    for (auto i = 0; i < num_points; ++i)
+    {
+        // remember each point takes up three places
+        double x = points[i][0];     // x is first
+        double y = points[i][1]; // y is second
+        double z = points[i][2]; // z is third
+    }
+}
+
+// dynamic memory allocation with pointers
+double* allocate_one_dimensional(int num_points)
+{
+    // allocate 3 doubles for each point (x,y,z)
+    double* coords = new double[num_points * 3];
+
+    // and return the allocated memory
+    return coords;
+}
+
+// and now an inefficient way to do it
+double** allocate_two_dimensional(int num_points)
+{
+    // first allocate a pointer for each point
+    double** coords = new double* [num_points];
+    // then allocate memory for each point
+    for (auto i = 0; i < num_points; ++i)
+        coords[i] = new double[3];
+
+    // this method is not efficient and should not be used for such simple cases
+    // it is presented here for educational purposes only
+
+    return coords;
+}
+
+void dynamic_memory_demo()
+{
+#define NUM_POINTS 100
+
+    double* points = allocate_one_dimensional(NUM_POINTS);
+    // do what we want with the points
+    do_stuff_with_points(points, NUM_POINTS);
+    // always release the memory when we no longer need it
+    delete[] points;
+
+    // and now an inefficient way to do it
+    double** points2 = allocate_two_dimensional(NUM_POINTS);
+    // do what we want with the points
+    do_stuff_with_points(points2, NUM_POINTS);
+    // always release the memory when we no longer need it
+    // this time releasing the memory is not so easy
+    // release each point
+    for (auto i = 0; i < NUM_POINTS; ++i)
+        delete[] points2[i];
+    // and finally release the pointers array
+    delete[] points2;
+}
 
 int main()
 {
     std::cout << "Hello from chapter 5!\n";
 
-    // function overloading
-    fancy_printer(1);         // calls the first
-    double d = 2.75;
-    fancy_printer(d);         // calls the second
-    char str[] = "abcd";
-    fancy_printer(str);       // calls the third
-    fancy_printer(3, str);    // calls the fourth
+    int var = 0;
+    int* ptr = &var;  // get a reference to var via its address
 
-    // default arguments
-    std::cout << "with default arguments:" << multiply(2) << "\n";
-    std::cout << "with all the arguments:" << multiply(2, 2) << "\n";
+    *ptr = 10;    // we actually modify var
+    std::cout << "var=" << var << "\n";
 
-    // use pointers to functions
-    run_iteration(my_callback_evens);
-    run_iteration(my_callback_odds);
+    // an array of integers
+    int iarr[10];
+    // accessed via a pointer
+    // the array variable itself is a pointer
+    ptr = iarr; // or
+    // we car get a pointer to the first element
+    ptr = &iarr[0];
+
+    // ------------------------
+
+    // create a sorted array with duplicate elements
+    int arr[]{ 1,2,2,2,2,3,4,4,5,5,6,7,7,8,9,10 };
+    // use the sizeof operator to count the number of elements
+    // we divide the size of the memory allocated by the size of the element
+    int len = sizeof(arr) / sizeof(int);
+
+    // call our function to 'clean' the array
+    // and return the number of unique elements
+    len = array_compactor(arr, len);
+    // after the call the array is NOT shorter
+    // we just moved the unique elements in the first len positions
+
+    // print the 'clean' part of the array
+    // we could use arr[i] notation but we are using pointer aritmetic
+    for (auto i = 0; i < len; ++i)
+        std::cout << *(arr + i) << ",";
+    std::cout << "\n";
+
+    // ---------------------------------------
+    // const means that the string cannot me modified
+    // const char* str = "abcdedcba";
+    char str[] = "abcdedcba";
+    if (is_palindrome(str))
+        std::cout << "palindrome\n";
+    else
+        std::cout << "not palindrome\n";
+
+
+    // ---------------------------------------
+    // here we declare our viriables
+    double x, y, z;
+    // and we call the function passing it their addresses
+    // the called function will set the values of our variables
+    read_position(&x, &y, &z);
+    // and pass it to another by value
+    show_position(x, y, z);
+
+    // the same job done in the C++ way
+    // and we call the function passing it their references
+    // the called function will set the values of our variables
+    read_position(x, y, z);
+    // and pass it to another by value
+    show_position(x, y, z);
+
 
     return 0;
 }

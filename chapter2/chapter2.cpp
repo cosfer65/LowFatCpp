@@ -2,48 +2,56 @@
 
 void branching()
 {
+    std::cout << "branching...\n";
+
     int a;      // create an integer variable a
     int b;      // create an integer variable b
-    // not here int c;      // create an integer variable c
 
     std::cout << "insert a:";   // give the user a hint
     std::cin >> a;              // read the value of a from the keyboard
     std::cout << "insert b:";   // another hint for the user
     std::cin >> b;              // now read the value of b
 
-    // could be const
-    int c = a + b;                  // calculate the value of c
+    int c = a + b;   // create an integer variable c and store the sum
 
-    if (c > 20)      // if c is bigger than 20
+    if (c >= 20)      // if c is bigger than or equal to 20
     {
         std::cout << "c is more than 20 : " << c << "\n";   // print this message
     }
-    else if (c == 20)// else if c is equal to 20)
+    else if (c >= 10) // else if c is bigger than or equal to 10
     {
-        std::cout << "c is equal to 20 : " << c << "\n";  // print this message
+        std::cout << "c is bigger than or equal to 10 and less than 20 : " << c << "\n";  // print this message
     }
-    else             // else (if c is less than 20)
+    else             // finally it is less than 10
     {
-        std::cout << "c is less than 20 : " << c << "\n";  // print this message
+        std::cout << "c is less than 10 : " << c << "\n";  // print this message
     }
 
-
-    // too bad  switch with true and false
-    bool d;         // create a boolean variable
-    d = c > 20;     // this will hold weather the condition is true or false
-    switch (d)      // depending on the condition do the following
+    // checking for distict values
+    // here we assign a random value
+    // in real world our variable has a value depending on the program state
+    int d = 3;
+    switch (d)
     {
-    case true:      // in case it is true
-        std::cout << "c is more than 20 : " << c << "\n";   // print this message
+    case 3:
+        std::cout << "value of d is 3\n";
+        break;
+    case 2:
+        std::cout << "value of d is 2\n";
+        break;
+    case 1:
+        std::cout << "value of d is 1\n";
         break;
     default:        // in any other case
-        std::cout << "c is less or equal to 20 : " << c << "\n";  // print this message
+        std::cout << "value of d is out of limits:" << d << "\n";
         break;
     }
 }
 
 void loops()
 {
+    std::cout << "loops...\n";
+
     // for
     for (int i = 0; i < 5; ++i)
     {
