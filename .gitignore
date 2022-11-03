@@ -5,3 +5,12 @@
 *.opendb
 *.ipch
 .vs/lowfatcpp/v16/.suo
+*.exe
+*.pdb
+*.recipe
+*.ilk
+*.log
+*.obj
+*.lastbuildstate
+*.tlog
+*.idb

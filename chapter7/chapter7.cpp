@@ -4,27 +4,18 @@
 #include <iostream>
 
 // a point in 3D class
-class point
+class    point
 {
-public:
     double x;
     double y;
     double z;
 
+public:
     // this constructor does it all
     // it accepts initial values and provides default ones
     point(double _x = 0, double _y = 0, double _z = 0) :x(_x), y(_y), z(_z) {
         std::cout << "point created\n";
     }
-    /* so these two constructors are obsolete
-    point(double _x, double _y, double _z) :x(_x), y(_y), z(_z) {
-        std::cout << "point created\n";
-    }
-    point(){
-        x = y = z = 0;
-        std::cout << "point created\n";
-    }
-    */
     // copy constructor
     point(const point& pt) :x(pt.x), y(pt.y), z(pt.z) {
         std::cout << "point copy-created\n";
@@ -32,6 +23,16 @@ public:
     // the class destructor
     ~point() {
         std::cout << "~point deleted\n";
+    }
+    // member function that moves (translates) the point
+    void translate(double _x, double _y, double _z) {
+        x += _x;
+        y += _y;
+        z += _z;
+    }
+    point operator+(const point& pt)
+    {
+        return point(x + pt.x, y + y, z + z);
     }
 };
 
@@ -66,6 +67,12 @@ public:
     }
     double& z() {
         return coordinates[2];
+    }
+
+    void translate(double x, double y, double z) {
+        coordinates[0] += x;
+        coordinates[1] += y;
+        coordinates[2] += z;
     }
 
     // the following function reads member variables
@@ -104,6 +111,15 @@ public:
 
 
 int main()
+{
+    point p1(1, 2, 3);
+    point p2(3, 5, 7);
+    point p3;
+    p3 = p1 + p2;
+    return 0;
+}
+
+int main_old()
 {
     std::cout << "Hello from chapter 7!\n";
 
