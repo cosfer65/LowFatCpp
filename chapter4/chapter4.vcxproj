@@ -85,6 +85,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chapter4.cpp" />
+    <ClCompile Include="chapter4b.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="chapter4b.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
