@@ -94,85 +94,69 @@ public:
 
 };
 
-class coin {
+// this function takes a reference to a constant string
+void print_out_string(const std::string& str)
+{
+    // this is a legitimate use of the constant variable
+    // reading its value is fine
+    std::cout << str << "\n";
+
+    // if we try to modify the string 
+    // a compilation error is generated
+    // uncomment this line and try to compile
+    // srt = "some other value";
+}
+
+void call_print()
+{
+    std::string str("hello world");
+    // we can call the function passing it some veriable
+    print_out_string(str);
+    // or we can create a temporary argument on the stack
+    print_out_string("temporary value");
+}
+
+class solid_body {
+    double m_mass;
 public:
-    coin() {}
-};
-class banknote {
-public:
-    banknote() {}
-};
-class wallet {
-public:
-    wallet() {}
-    void input(coin* c) { /* handle accordingly */ }
-    void input(banknote* b) { /* handle accordingly */ }
+    solid_body(double m = 0) :m_mass(m) {}
+
+    // this function gives read only access to the object's mass
+    const double& mass() { return m_mass; }
 };
 
+class point2d {
+    double x;
+    double y;
+public:
+    point2d(double _x = 0, double _y = 0) :x(_x), y(_y) {}
+    // the following function reads member variables
+    // and should no modify them
+    double get_x() const {
+        std::cout << "constant function:" << x << "\n";
+        return x;
+    }
+    // the following function modifies member variables
+    double get_x() {
+        x = 10;
+        std::cout << "non constant function:" << x << "\n";
+        return x;
+    }
+};
+
+void demo_const_function()
+{
+    point2d p(0, 0);
+    const point2d cp = p;
+    // notice which overloaded function is called 
+    // based on weather the object is const
+    std::cout << p.get_x() << ", " << cp.get_x() << "\n";
+}
 
 int main()
 {
-    point p1(1, 2, 3);
-    point p2(3, 5, 7);
-    point p3;
-    p3 = p1 + p2;
-    return 0;
-}
-
-int main_old()
-{
     std::cout << "Hello from chapter 7!\n";
 
-    // create some points
-    point start_point(1, 1, 1);
-    point end_point;
-
-    point p1(1, 2, 3);  // create the first point
-    // use copy constructor
-    point p2(p1);       // create the second copying the first
-    point p3 = p2;      // this is equivalent to the above
-
-    vertex v1(1, 2, 3);  // create a point
-    v1.y() = 10;         // setting a coordinate
-    std::cout << v1.y() << "\n";   // and reading it
-
-    // constants
-    const int c = 10;     // const variable
-    const int& cr = c;    // reference to const variable
-    const int* cp = &c;   // pointer to const variable
-    // the following statements generate errors
-    // because we  try to modify constant data
-    /*
-    c = 1;
-    cr = 2;
-    *cp = 3;
-    */ 
-
-    int i, j;
-    int* const pi = &i;  // constant pointer initialized
-    *pi = 10;            // ok to change content
-    //pi = &j;             // error, constant pointer
-
-    // with operator overloading
-    // this code is perfectly valid
-    vertex _p1(1, 2, 3);    // create a point
-    vertex _p2(2, 3, 4);    // create another point
-    vertex _p3 = _p2 + _p1;   // and now add them to create a third
-
-    // dynamic memory allocation
-    point* ptr = new point(1, 2, 3);
-    point* ptr2 = new point(*ptr);
-
-    // simple array allocation
-    point* dp = new point[5];
-    // allocation with initializers
-    point* _dp = new point[5]{ {1, 4, 5},{2, 5, 6},{3, 6, 7},{4, 7, 8},{5, 8, 9} };
-
-    // delete an array of objects
-    delete[] dp;
-    delete[] _dp;
-    // delete one object
-    delete ptr;
-
+    demo_const_function();
     return 0;
 }

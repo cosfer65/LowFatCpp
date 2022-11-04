@@ -5,18 +5,19 @@
 
 // some fundamental stuff in 3D space
 class point {
-public:
+protected:   // only child classes can access these
     double x, y, z;
+public:
     point(double _x = 0, double _y = 0, double _z = 0) :x(_x), y(_y), z(_z) {}
     ~point() {}
 };
 
 // a solid object definition
 class solid_object {
-public:
+protected:
     double mass;
     point position;
-
+public:
     solid_object(double m = 0) : mass(m) {}
     virtual ~solid_object() {}
     // pure virtual function
@@ -25,8 +26,9 @@ public:
 
 // the cube is a special solid object
 class cube : public solid_object {
-public:
+protected:
     double edge_length;
+public:
     cube(double m, double el) :solid_object(m), edge_length(el) {}
     virtual ~cube() {}
     virtual double volume() const { return edge_length * edge_length * edge_length; }
@@ -35,8 +37,9 @@ public:
 // so is a sphere
 const double pi = 3.1415926;
 class sphere :public solid_object {
-public:
+protected:
     double radius;
+public:
     sphere(double m, double r) :solid_object(m), radius(r) {}
     virtual ~sphere() {}
     virtual double volume() const { return 4 * pi * radius * radius * radius / 3; }
@@ -182,10 +185,11 @@ void inheritance()
 
 // virtual inheritance
 class a_base {
+protected:
+    int x;
 public:
     a_base() { std::cout << "a_base\n"; }
     virtual ~a_base() { std::cout << "~a_base\n"; }
-    int x;
 };
 
 // these classes have one instance of the base class each
