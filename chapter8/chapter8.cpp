@@ -118,48 +118,44 @@ public:
 // multilevel inheritance
 class vehicle {
 public:
-    vehicle() {}
+    vehicle() { std::cout << "vehicle\n"; }
     virtual ~vehicle() {}
-    void print() {
-        std::cout << "vehicle\n";
-    }
+    virtual void print() = 0;
 };
 // car is a vehicle
 class car :public vehicle {
 public:
-    car() {}
+    car() { std::cout << "car\n"; }
     virtual ~car() {}
-    void print() {
-        std::cout << "car\n";
+    virtual void print() {
+        std::cout << "i am a car\n";
     }
 };
-
 // sports_car is a car, and a vehicle
 class sports_car :public car {
 public:
-    sports_car() {}
+    sports_car() { std::cout << "sports car\n"; }
     virtual ~sports_car() {}
-    void print() {
-        std::cout << "sports car\n";
+    virtual void print() {
+        std::cout << "i am a sports car\n";
     }
 };
 
 class made_by_me {
 public:
-    made_by_me() {}
+    made_by_me() { std::cout << "my product\n"; }
     virtual ~made_by_me() {}
-    void print() {
-        std::cout << "my product\n";
+    virtual void print() {
+        std::cout << "this is my product\n";
     }
 };
 
 class my_car :public car, public made_by_me {
 public:
-    my_car() {}
+    my_car() { std::cout << "my car\n"; }
     virtual ~my_car() {}
-    void print() {
-        car::print();
-        made_by_me::print();
+    virtual void print() {
+        std::cout << "this is my car\n";
     }
 };
 
@@ -177,9 +173,11 @@ void inheritance()
 
     my_car c;
     // access the base functions
+    std::cout << "access the base classes functions\n";
     c.car::print();
     c.made_by_me::print();
     // access the class function
+    std::cout << "access the class function\n";
     c.print();
 }
 

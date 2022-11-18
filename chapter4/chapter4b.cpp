@@ -180,9 +180,10 @@ void set_draw_function(draw_function function_pointer)
 
 void main_program_loop()
 {
-    bool we_are_happy_with_the_game = true;
-    while (we_are_happy_with_the_game) {
-        // do our gaming stuff
+    while (true) {  // loop forever
+        // do our program stuff
+        if (user_wants_to_exit)  // user selected to terminate
+            break;
         // and finally call draw to update the scene
         draw();
     }
