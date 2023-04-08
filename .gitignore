@@ -16,3 +16,8 @@
 *.idb
 *.bak
 *.txt
+*.iobj
+*.ipdb
+*.lock
+*.vsidx
+.vs/lowfatcpp/v17/.suo

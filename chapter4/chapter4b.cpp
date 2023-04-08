@@ -182,8 +182,6 @@ void main_program_loop()
 {
     while (true) {  // loop forever
         // do our program stuff
-        if (user_wants_to_exit)  // user selected to terminate
-            break;
         // and finally call draw to update the scene
         draw();
     }
