@@ -1,5 +1,20 @@
 #include <iostream>
 
+int zero_return()
+{
+    return 0;
+}
+
+bool is_valid()
+{
+    return true;
+}
+
+int my_calculation()
+{
+    return 3;
+}
+
 void branching()
 {
     std::cout << "branching...\n";
@@ -27,11 +42,26 @@ void branching()
         std::cout << "c is less than 10 : " << c << "\n";  // print this message
     }
 
+    if (zero_return())
+    {
+        std::cout << "if you see this message something went wrong\n";
+    }
+
+    if (is_valid())
+    {
+        std::cout << "this is a really valid result\n";
+    }
+
+    if (is_valid() && !zero_return())
+    {
+        std::cout << "is_valid returned true AND negated zero_return was true as well\n";
+    }
+
     // checking for distict values
     // here we assign a random value
     // in real world our variable has a value depending on the program state
     int d = 3;
-    switch (d)
+    switch (my_calculation())
     {
     case 3:
         std::cout << "value of d is 3\n";
@@ -74,6 +104,14 @@ void loops()
         ++i;
     } while (i < 5);
 
+    {
+        int sum = 0;
+        int i = 1;
+        do {
+            sum += i;
+            ++i;
+        } while (i < 10);
+    }
     for (;;)
     {
         std::cout << "option 1->5 doubles the input\n";
@@ -91,13 +129,96 @@ void loops()
 
 }
 
+void break_and_continue()
+{
+    {
+int sum = 0;
+int top_limit = 15;
+for (int i = 1; i < 10; ++i)
+{
+    sum += i;
+    if (sum > top_limit)
+        break;
+}
+if (sum > top_limit)
+    std::cout << "the sum is greater than " << top_limit << "\n";
+else
+    std::cout << "the sum is less than or equal to " << top_limit << "\n";
+    }
+
+    {
+        // count odds only
+        int sum = 0;
+        for (int i = 1; i < 10; ++i)
+        {
+            if (i % 2 == 0)  // if we are on an even number
+                continue;    // ignore it and go for the next
+            sum += i;
+        }
+        std::cout << "the sum is " << sum << "\n";
+    }
+
+}
+
+double f_of_x(double x)
+{
+    double f = (3 * x * x + 5 * x) / (x + 2);
+    return f;
+}
+
+double f_of_x_improved(double x)
+{
+    double f;
+    double divisor = x + 2;
+    if (divisor != 0)    // check for division by 0
+    {
+        f = (3 * x * x + 5 * x) / divisor;
+    }
+    else     // in case of error
+    {        // alert the user
+        std::cout << "function not defined for x=" << x << "\n";
+        f = 0;   // and maybe return some valid value
+    }
+    return f;
+}
+
+double f_of_x_simplified(double x)
+{
+    double divisor = x + 2;
+    if (divisor == 0)    // check for division by 0
+    {
+        std::cout << "function not defined for x=" << x << "\n";
+        return 0;    // return from this point
+    }
+    return (3 * x * x + 5 * x) / divisor;
+}
+
+double calc_average()
+{
+    double a, sum;                // declare our variables
+    sum = 0;                      // initialize the sum
+    std::cout << "insert a:";     // give the user a hint
+    std::cin >> a;                // read the value of a from the keyboard
+    sum = sum + a;
+    // ... add more input if needed
+    std::cout << "insert a:";     // give the user a hint
+    std::cin >> a;                // read the value of a from the keyboard
+    sum = sum + a;
+
+    double average = sum / 2;
+
+    return average;
+}
+
 int main()
 {
     std::cout << "Hello from chapter 2!\n";
 
-    branching();
+    // branching();
 
-    loops();
+    // loops();
+
+    std::cout << "f(1.23)=" << f_of_x_improved(-2) << "\n";
 
     return 0;
 }
